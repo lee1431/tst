@@ -1,858 +1,617 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>시니어 웰에이징 추천관</title>
+  <title>회사의 조직에 필요한 인재</title>
   <style>
     :root {
-      --bg: #f6f4ef;
+      --bg: #f6f7fb;
       --surface: #ffffff;
-      --text: #222222;
-      --muted: #6b6b6b;
-      --line: #e7e2d8;
-      --point: #2f6f5f;
-      --point-dark: #244f45;
-      --warm: #dca86a;
-      --shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
-      --radius: 24px;
-      --max: 1180px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: min(calc(100% - 32px), var(--max));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(12px);
-      background: rgba(246, 244, 239, 0.84);
-      border-bottom: 1px solid rgba(34, 34, 34, 0.06);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 74px;
-      gap: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--point), var(--warm));
-      box-shadow: var(--shadow);
-    }
-
-    .menu {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .menu a:hover { color: var(--text); }
-
-    .nav-cta {
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: var(--point);
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .hero {
-      padding: 72px 0 42px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-copy,
-    .hero-panel,
-    .card,
-    .notice,
-    .article-card,
-    .footer-box {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      padding: 44px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(47, 111, 95, 0.1);
-      color: var(--point-dark);
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    h1, h2, h3, h4, p { margin: 0; }
-
-    h1 {
-      font-size: clamp(38px, 6vw, 68px);
-      line-height: 1.04;
-      letter-spacing: -0.05em;
-      margin-bottom: 18px;
-    }
-
-    .hero-copy p {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 620px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 15px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary { background: var(--point); color: #fff; }
-    .btn-secondary { background: #f3efe8; color: var(--text); }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 34px;
-    }
-
-    .stat {
-      padding: 18px;
-      border-radius: 20px;
-      background: #faf8f3;
-      border: 1px solid var(--line);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 24px;
-      letter-spacing: -0.04em;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .hero-panel {
-      overflow: hidden;
-      position: relative;
-      min-height: 100%;
-      padding: 28px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8f3ea 100%);
-    }
-
-    .panel-badge {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid var(--line);
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .mockup {
-      display: grid;
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .mock-item {
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid var(--line);
-    }
-
-    .mock-item small {
-      display: block;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-
-    .mock-item strong {
-      font-size: 21px;
-      letter-spacing: -0.04em;
-    }
-
-    .section {
-      padding: 28px 0;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.1;
-      letter-spacing: -0.05em;
-    }
-
-    .section-head p {
-      max-width: 520px;
-      color: var(--muted);
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      padding: 24px;
-    }
-
-    .pill {
-      display: inline-flex;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #f3efe8;
-      color: var(--point-dark);
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .card h3 {
-      font-size: 24px;
-      line-height: 1.15;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-
-    .card p,
-    .meta,
-    .article-card p,
-    .disclaimer,
-    .footer-box p {
-      color: var(--muted);
-    }
-
-    .feature-list,
-    .product-list,
-    .check-list {
-      display: grid;
-      gap: 10px;
-      margin: 18px 0 22px;
-      padding: 0;
-      list-style: none;
-    }
-
-    .feature-list li,
-    .product-list li,
-    .check-list li {
-      display: flex;
-      gap: 10px;
-      align-items: start;
-      color: #3d3d3d;
-      font-size: 15px;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      margin-top: 8px;
-      border-radius: 999px;
-      background: var(--warm);
-      flex: 0 0 auto;
-    }
-
-    .product-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100%;
-    }
-
-    .product-top {
-      margin-bottom: 18px;
-    }
-
-    .product-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .rank {
-      min-width: 42px;
-      height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      background: #f3efe8;
-      font-weight: 800;
-    }
-
-    .price {
-      margin-top: 16px;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .price small {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      margin-top: 2px;
-      letter-spacing: 0;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .tag {
-      padding: 7px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      font-size: 12px;
-      color: #4f4f4f;
-      background: #fff;
-    }
-
-    .notice {
-      padding: 24px;
-      margin-top: 12px;
-    }
-
-    .notice h3 {
-      font-size: 22px;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-
-    .notice .check-list {
-      margin: 16px 0 0;
-    }
-
-    .articles {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .article-card {
-      padding: 24px;
-      min-height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .article-card h3 {
-      font-size: 22px;
-      line-height: 1.2;
-      letter-spacing: -0.04em;
-      margin: 14px 0 10px;
-    }
-
-    .article-link {
-      margin-top: 16px;
-      color: var(--point-dark);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .faq {
-      display: grid;
-      gap: 12px;
-    }
-
-    details {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
-    }
-
-    summary {
-      cursor: pointer;
-      list-style: none;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    summary::-webkit-details-marker { display: none; }
-    details p { margin-top: 12px; color: var(--muted); }
-
-    footer {
-      padding: 36px 0 54px;
-    }
-
-    .footer-box {
-      padding: 28px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .footer-brand {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 8px;
-    }
-
-    .disclaimer {
-      font-size: 13px;
-      line-height: 1.7;
-      margin-top: 10px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      padding: 12px 16px;
-      border-radius: 999px;
-      background: #f3efe8;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 1100px) {
-      .hero-grid,
-      .grid-4,
-      .grid-3,
-      .articles {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 780px) {
-      .menu { display: none; }
-      .nav { min-height: 68px; }
-      .hero { padding-top: 28px; }
-      .hero-grid,
-      .grid-4,
-      .grid-3,
-      .articles,
-      .hero-stats,
-      .footer-box {
-        grid-template-columns: 1fr;
-        display: grid;
-      }
-      .hero-copy,
-      .hero-panel,
-      .card,
-      .notice,
-      .article-card,
-      .footer-box {
-        padding: 22px;
-      }
-      h1 { font-size: 40px; }
-      .hero-copy p { font-size: 16px; }
-      .section-head { align-items: start; flex-direction: column; }
-      .footer-links { margin-top: 6px; }
-    }
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --good: #059669;
+      --good-soft: #d1fae5;
+      --warn: #d97706;
+      --warn-soft: #fef3c7;
+      --accent: #7c3aed;
+      --accent-soft: #ede9fe;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+      --max: 1160px;
+    }* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 42%, #ffffff 100%);
+  line-height: 1.65;
+}
+
+.wrap {
+  width: min(calc(100% - 32px), var(--max));
+  margin: 0 auto;
+}
+
+.hero {
+  padding: 84px 0 44px;
+}
+
+.hero-card {
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -80px;
+  top: -80px;
+  background: radial-gradient(circle, rgba(37,99,235,0.18), rgba(37,99,235,0));
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 18px;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+
+h1 {
+  font-size: clamp(34px, 5vw, 58px);
+  margin-bottom: 18px;
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 0;
+  max-width: 820px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.stat strong {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+section {
+  padding: 28px 0;
+}
+
+.section-head {
+  margin-bottom: 20px;
+}
+
+.section-head h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.section-head p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: var(--shadow);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.b-blue { background: var(--primary-soft); color: var(--primary); }
+.b-green { background: var(--good-soft); color: var(--good); }
+.b-orange { background: var(--warn-soft); color: var(--warn); }
+.b-purple { background: var(--accent-soft); color: var(--accent); }
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--muted);
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.ratio-wrap {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.ratio-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.stack {
+  display: flex;
+  width: 100%;
+  min-height: 64px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 18px 0 14px;
+  border: 1px solid var(--line);
+}
+
+.seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+  text-align: center;
+  padding: 8px;
+}
+
+.s1 { width: 20%; background: #2563eb; }
+.s2 { width: 30%; background: #7c3aed; }
+.s3 { width: 35%; background: #059669; }
+.s4 { width: 15%; background: #d97706; }
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 14px;
+  margin-top: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.note {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  padding: 16px 18px;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.positioning {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.position-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.matrix {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  height: 430px;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.axis-x, .axis-y {
+  position: absolute;
+  background: #94a3b8;
+}
+
+.axis-x { left: 56px; right: 24px; bottom: 48px; height: 2px; }
+.axis-y { top: 24px; bottom: 48px; left: 56px; width: 2px; }
+
+.axis-label {
+  position: absolute;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.label-x { right: 28px; bottom: 18px; }
+.label-y {
+  left: 12px;
+  top: 18px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.quad {
+  position: absolute;
+  border: 1px dashed #dbe2ea;
+}
+
+.q1 { left: 56px; top: 24px; width: calc(50% - 28px); height: calc(50% - 24px); }
+.q2 { right: 24px; top: 24px; width: calc(50% - 24px); height: calc(50% - 24px); }
+.q3 { left: 56px; bottom: 48px; width: calc(50% - 28px); height: calc(50% - 24px); }
+.q4 { right: 24px; bottom: 48px; width: calc(50% - 24px); height: calc(50% - 24px); }
+
+.bubble {
+  position: absolute;
+  border-radius: 999px;
+  color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+}
+
+.bubble small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.92;
+}
+
+.b1 {
+  width: 108px; height: 108px;
+  left: 110px; bottom: 92px;
+  background: #d97706;
+}
+
+.b2 {
+  width: 132px; height: 132px;
+  left: 220px; top: 126px;
+  background: #2563eb;
+}
+
+.b3 {
+  width: 154px; height: 154px;
+  right: 160px; top: 92px;
+  background: #059669;
+}
+
+.b4 {
+  width: 120px; height: 120px;
+  right: 56px; bottom: 78px;
+  background: #7c3aed;
+}
+
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.step-number {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+footer {
+  padding: 30px 0 70px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .stats,
+  .card-grid,
+  .ratio-wrap,
+  .positioning,
+  .roadmap {
+    grid-template-columns: 1fr;
+  }
+
+  .legend {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-card,
+  .card,
+  .ratio-card,
+  .position-box {
+    padding: 22px;
+  }
+
+  .matrix {
+    height: 520px;
+  }
+
+  .bubble {
+    font-size: 14px;
+  }
+
+  .b1 { left: 76px; bottom: 78px; }
+  .b2 { left: 126px; top: 152px; }
+  .b3 { right: 66px; top: 84px; }
+  .b4 { right: 28px; bottom: 84px; }
+}
+
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container nav">
-      <a href="#top" class="brand">
-        <span class="brand-mark"></span>
-        <span>WELLAGING LAB</span>
-      </a>
-      <nav class="menu">
-        <a href="#products">추천 아이템</a>
-        <a href="#routine">건강 루틴</a>
-        <a href="#articles">정보 콘텐츠</a>
-        <a href="#faq">자주 묻는 질문</a>
-      </nav>
-      <a class="nav-cta" href="#products">추천 보러가기</a>
-    </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">시니어 웰에이징 큐레이션</div>
-          <h1>나이보다 늦게 늙는<br />건강한 생활 아이템 모음</h1>
-          <p>
-            과장된 치료 표현 없이, 일상 컨디션 관리와 활력 루틴에 초점을 맞춘
-            시니어 추천관입니다. 부모님 선물, 중장년 자기관리, 웰에이징 관심층에게
-            어울리는 제품과 정보를 한눈에 정리했습니다.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#products">쿠팡 추천 아이템 보기</a>
-            <a class="btn btn-secondary" href="#articles">건강 정보 먼저 읽기</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat">
-              <strong>50+</strong>
-              <span>중장년 타깃 문구 활용</span>
-            </div>
-            <div class="stat">
-              <strong>TOP 4</strong>
-              <span>핵심 카테고리 중심 구성</span>
-            </div>
-            <div class="stat">
-              <strong>1 Page</strong>
-              <span>광고형 랜딩 템플릿</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-panel">
-          <span class="panel-badge">브랜드 문구 예시</span>
-          <div class="mockup">
-            <div class="mock-item">
-              <small>메인 카피</small>
-              <strong>오늘의 활력, 내일의 루틴</strong>
-            </div>
-            <div class="mock-item">
-              <small>서브 카피</small>
-              <strong>잘 먹고, 잘 자고, 잘 걷는 웰에이징</strong>
-            </div>
-            <div class="mock-item">
-              <small>전환 버튼</small>
-              <strong>지금 쿠팡에서 확인하기</strong>
-            </div>
-          </div>
-        </div>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-card">
+        <span class="eyebrow">Talent Strategy Framework</span>
+        <h1>회사의 조직에 필요한 인재</h1>
+        <p>
+          회사가 앞으로 나아가기 위해서는 단순히 뛰어난 개인이 아니라,
+          서로 다른 역할과 성향을 가진 인재가 균형 있게 배치된 조직이 필요합니다.
+          핵심은 한두 명의 스타 플레이어가 아니라, 방향을 설계하고 실행하며 확장하고 지켜내는 인재의 비율과 포지셔닝입니다.
+        </p><div class="stats">
+      <div class="stat">
+        <strong>20%</strong>
+        <span>방향을 설계하는 전략형 인재</span>
       </div>
-    </section>
-
-    <section class="section" id="routine">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>시니어 웰에이징 카테고리</h2>
-          </div>
-          <p>
-            “불로장생” 같은 자극적인 톤은 컨셉으로만 두고, 실제 페이지 문구는
-            활력, 균형, 일상관리, 웰에이징 중심으로 잡는 것이 안전합니다.
-          </p>
-        </div>
-
-        <div class="grid-4">
-          <article class="card">
-            <span class="pill">활력 루틴</span>
-            <h3>기초 영양 밸런스</h3>
-            <p>식사가 불규칙하거나 기본 영양 관리를 챙기고 싶은 분에게 어울리는 구성.</p>
-            <ul class="feature-list">
-              <li><span class="dot"></span><span>종합비타민/미네랄 중심 소개</span></li>
-              <li><span class="dot"></span><span>하루 1정, 쉬운 루틴 강조</span></li>
-              <li><span class="dot"></span><span>부모님 선물 포인트 연결</span></li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <span class="pill">눈 건강</span>
-            <h3>일상 속 편안한 시야 관리</h3>
-            <p>독서, 스마트폰, TV 시청 시간이 많은 중장년층을 위한 관심 카테고리.</p>
-            <ul class="feature-list">
-              <li><span class="dot"></span><span>루테인·지아잔틴 계열 정리</span></li>
-              <li><span class="dot"></span><span>복용 포인트와 보관법 요약</span></li>
-              <li><span class="dot"></span><span>가성비/프리미엄 구분 추천</span></li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <span class="pill">순환 케어</span>
-            <h3>가벼운 하루 컨디션</h3>
-            <p>걷기, 스트레칭, 수분 섭취 같은 생활 루틴과 함께 소개하기 좋은 영역.</p>
-            <ul class="feature-list">
-              <li><span class="dot"></span><span>오메가3 계열 관심 제품 연결</span></li>
-              <li><span class="dot"></span><span>식단과 함께 보는 정보형 구성</span></li>
-              <li><span class="dot"></span><span>중장년 친화적 톤 유지</span></li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <span class="pill">장 건강</span>
-            <h3>편안한 아침 루틴</h3>
-            <p>유산균, 식이습관, 물 섭취 등 일상형 콘텐츠와 가장 잘 맞는 추천 카테고리.</p>
-            <ul class="feature-list">
-              <li><span class="dot"></span><span>유산균 제품 비교형 콘텐츠</span></li>
-              <li><span class="dot"></span><span>냉장/실온 보관 포인트 정리</span></li>
-              <li><span class="dot"></span><span>정기구매 유도 문구 삽입 가능</span></li>
-            </ul>
-          </article>
-        </div>
+      <div class="stat">
+        <strong>30%</strong>
+        <span>성과를 만드는 핵심 실행 인재</span>
       </div>
-    </section>
-
-    <section class="section" id="products">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>추천 아이템 템플릿</h2>
-          </div>
-          <p>
-            아래 버튼의 <strong>href</strong> 값을 쿠팡파트너스 링크로 교체하면 바로 활용 가능합니다.
-            상품명과 가격, 요약 문구도 원하는 형태로 수정하면 됩니다.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="card product-card">
-            <div class="product-top">
-              <div class="product-title">
-                <div>
-                  <span class="pill">베스트 루틴 01</span>
-                  <h3>종합비타민 포뮬러</h3>
-                </div>
-                <span class="rank">01</span>
-              </div>
-              <p>기본 영양 관리 중심의 대표 상품 영역. 입문자용 설명에 잘 어울립니다.</p>
-              <ul class="product-list">
-                <li><span class="dot"></span><span>하루 1정 루틴</span></li>
-                <li><span class="dot"></span><span>부모님 선물형 문구 활용 가능</span></li>
-                <li><span class="dot"></span><span>기초 영양 밸런스 카테고리 적합</span></li>
-              </ul>
-              <div class="tag-row">
-                <span class="tag">입문용</span>
-                <span class="tag">기본관리</span>
-                <span class="tag">선물추천</span>
-              </div>
-              <div class="price">29,900원 <small>가격은 예시입니다</small></div>
-            </div>
-            <a class="btn btn-primary" href="https://partners.coupang.com/" target="_blank" rel="noopener noreferrer sponsored">쿠팡에서 보기</a>
-          </article>
-
-          <article class="card product-card">
-            <div class="product-top">
-              <div class="product-title">
-                <div>
-                  <span class="pill">베스트 루틴 02</span>
-                  <h3>루테인 케어 제품</h3>
-                </div>
-                <span class="rank">02</span>
-              </div>
-              <p>눈 건강 관심층을 위한 비교형 섹션. 시니어 타깃 콘텐츠에서 반응이 좋은 편입니다.</p>
-              <ul class="product-list">
-                <li><span class="dot"></span><span>독서·TV 시청 습관과 연결하기 좋음</span></li>
-                <li><span class="dot"></span><span>가성비형/프리미엄형 분기 가능</span></li>
-                <li><span class="dot"></span><span>상세페이지 이동 CTA 강함</span></li>
-              </ul>
-              <div class="tag-row">
-                <span class="tag">눈 건강</span>
-                <span class="tag">중장년</span>
-                <span class="tag">비교추천</span>
-              </div>
-              <div class="price">34,500원 <small>가격은 예시입니다</small></div>
-            </div>
-            <a class="btn btn-primary" href="https://partners.coupang.com/" target="_blank" rel="noopener noreferrer sponsored">쿠팡에서 보기</a>
-          </article>
-
-          <article class="card product-card">
-            <div class="product-top">
-              <div class="product-title">
-                <div>
-                  <span class="pill">베스트 루틴 03</span>
-                  <h3>오메가3 데일리</h3>
-                </div>
-                <span class="rank">03</span>
-              </div>
-              <p>가벼운 운동과 식단 관리를 함께 소개할 때 자연스럽게 묶기 좋은 상품 영역.</p>
-              <ul class="product-list">
-                <li><span class="dot"></span><span>하루 섭취량 중심 정보 배치</span></li>
-                <li><span class="dot"></span><span>순환/활력 카테고리와 연결</span></li>
-                <li><span class="dot"></span><span>50대 이상 타깃 문구 활용 가능</span></li>
-              </ul>
-              <div class="tag-row">
-                <span class="tag">활력관리</span>
-                <span class="tag">데일리</span>
-                <span class="tag">가족추천</span>
-              </div>
-              <div class="price">25,800원 <small>가격은 예시입니다</small></div>
-            </div>
-            <a class="btn btn-primary" href="https://partners.coupang.com/" target="_blank" rel="noopener noreferrer sponsored">쿠팡에서 보기</a>
-          </article>
-        </div>
-
-        <div class="notice">
-          <h3>쿠팡파트너스 적용 체크포인트</h3>
-          <ul class="check-list">
-            <li><span class="dot"></span><span>버튼 링크를 본인 파트너스 링크로 교체하세요.</span></li>
-            <li><span class="dot"></span><span>페이지 하단에 “이 포스팅은 쿠팡파트너스 활동의 일환으로 일정 수수료를 제공받을 수 있습니다.” 문구를 넣으세요.</span></li>
-            <li><span class="dot"></span><span>질병 치료·예방처럼 보이는 직접적 표현은 피하고, 일상 건강관리 중심으로 작성하세요.</span></li>
-          </ul>
-        </div>
+      <div class="stat">
+        <strong>35%</strong>
+        <span>조직을 안정화하는 운영 인재</span>
       </div>
-    </section>
-
-    <section class="section" id="articles">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>정보형 콘텐츠 블록</h2>
-          </div>
-          <p>
-            검색 유입은 결국 글에서 옵니다. 상품만 올리기보다 카테고리별 정보 글을 함께 배치하면 클릭률이 좋아집니다.
-          </p>
-        </div>
-
-        <div class="articles">
-          <article class="article-card">
-            <div>
-              <span class="pill">콘텐츠 01</span>
-              <h3>50대 이후 기본 영양 관리는 어떻게 시작할까</h3>
-              <p>기초 영양, 식사 습관, 하루 루틴을 함께 묶어서 설명하기 좋은 정보형 글 템플릿.</p>
-            </div>
-            <a class="article-link" href="#">글 자세히 보기 →</a>
-          </article>
-
-          <article class="article-card">
-            <div>
-              <span class="pill">콘텐츠 02</span>
-              <h3>부모님 선물용 건강 아이템 고를 때 보는 기준</h3>
-              <p>선물형 카피와 추천형 CTA를 섞기 좋은 주제. 시즌 이벤트와도 잘 맞습니다.</p>
-            </div>
-            <a class="article-link" href="#">글 자세히 보기 →</a>
-          </article>
-
-          <article class="article-card">
-            <div>
-              <span class="pill">콘텐츠 03</span>
-              <h3>아침 루틴을 가볍게 만드는 장 건강 관리 포인트</h3>
-              <p>유산균, 식이섬유, 물 섭취를 함께 묶어 제품형 글과 정보형 글을 동시에 구성할 수 있습니다.</p>
-            </div>
-            <a class="article-link" href="#">글 자세히 보기 →</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="faq">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>자주 묻는 질문</h2>
-          </div>
-          <p>광고형 랜딩이어도 기본적인 안내 문구와 신뢰 요소는 반드시 넣는 편이 좋습니다.</p>
-        </div>
-
-        <div class="faq">
-          <details open>
-            <summary>이 페이지는 직접 판매를 하나요?</summary>
-            <p>아니요. 이 템플릿은 추천형 랜딩페이지 구조입니다. 실제 구매는 외부 판매처로 연결되는 형태를 기준으로 만들었습니다.</p>
-          </details>
-          <details>
-            <summary>상품명은 어떻게 바꾸나요?</summary>
-            <p>상품 카드 안의 제목, 설명, 가격, 버튼 링크를 원하는 내용으로 수정하면 됩니다. 현재 들어간 문구는 모두 예시입니다.</p>
-          </details>
-          <details>
-            <summary>“불로장생” 표현을 그대로 써도 되나요?</summary>
-            <p>컨셉 키워드로는 가능하지만 실제 본문과 광고 문구는 웰에이징, 활력, 일상 건강관리 같은 표현으로 정리하는 편이 안전합니다.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-box">
-        <div>
-          <div class="footer-brand">WELLAGING LAB</div>
-          <p>시니어 웰에이징을 위한 추천형 콘텐츠 템플릿</p>
-          <p class="disclaimer">
-            본 페이지는 건강 관련 일반 정보 제공 및 상품 추천을 위한 예시 템플릿입니다.<br />
-            특정 질환의 진단, 치료, 예방을 위한 의료 정보로 해석되어서는 안 됩니다.<br />
-            이 포스팅은 쿠팡파트너스 활동의 일환으로 일정 수수료를 제공받을 수 있습니다.
-          </p>
-        </div>
-
-        <div class="footer-links">
-          <a href="#products">추천 아이템</a>
-          <a href="#articles">정보 콘텐츠</a>
-          <a href="#faq">이용 안내</a>
-        </div>
+      <div class="stat">
+        <strong>15%</strong>
+        <span>성장을 가속하는 도전·혁신 인재</span>
       </div>
     </div>
-  </footer>
+  </div>
+</header>
+
+<section>
+  <div class="section-head">
+    <h2>왜 인재의 비율이 중요한가</h2>
+    <p>좋은 조직은 모두가 같은 유형의 인재로 채워진 곳이 아니라, 서로 다른 역할이 맞물려 성과를 내는 구조를 가진 조직입니다.</p>
+  </div>
+  <div class="card-grid">
+    <article class="card">
+      <span class="badge b-blue">전략 관점</span>
+      <h3>방향 없는 실행은 낭비가 됩니다</h3>
+      <p>시장을 읽고 우선순위를 정하며 자원을 어디에 집중할지 결정하는 인재가 있어야 실행의 밀도가 높아집니다.</p>
+      <ul>
+        <li>중장기 비전 정렬</li>
+        <li>사업 우선순위 설계</li>
+        <li>핵심 의사결정 지원</li>
+      </ul>
+    </article>
+    <article class="card">
+      <span class="badge b-green">실행 관점</span>
+      <h3>성과는 결국 실행력에서 나옵니다</h3>
+      <p>아이디어를 실제 결과로 바꾸는 실행 인재가 충분해야 계획이 사업 성과로 연결됩니다.</p>
+      <ul>
+        <li>제품·서비스 완성</li>
+        <li>고객 문제 해결</li>
+        <li>속도와 품질 균형</li>
+      </ul>
+    </article>
+    <article class="card">
+      <span class="badge b-orange">조직 관점</span>
+      <h3>성장은 시스템이 받쳐줄 때 지속됩니다</h3>
+      <p>빠른 성장기일수록 운영과 프로세스를 잡는 인재가 중요하며, 이들이 조직의 재현성과 안정성을 만듭니다.</p>
+      <ul>
+        <li>협업 구조 정착</li>
+        <li>프로세스 표준화</li>
+        <li>리스크 관리</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>권장 인재 비율</h2>
+    <p>성장하는 회사 기준으로, 아래와 같은 균형이 조직의 추진력과 지속 가능성을 함께 높입니다.</p>
+  </div>
+  <div class="ratio-wrap">
+    <div class="ratio-card">
+      <h3>조직 인재 포트폴리오</h3>
+      <div class="stack" aria-label="조직 인재 비율">
+        <div class="seg s1">20%</div>
+        <div class="seg s2">30%</div>
+        <div class="seg s3">35%</div>
+        <div class="seg s4">15%</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#2563eb"></span>전략형 인재 20% — 방향 설정, 기획, 리딩</div>
+        <div class="legend-item"><span class="dot" style="background:#7c3aed"></span>핵심 실행형 인재 30% — 목표 달성, 실행 주도</div>
+        <div class="legend-item"><span class="dot" style="background:#059669"></span>운영 안정형 인재 35% — 조직 유지, 체계화, 품질 관리</div>
+        <div class="legend-item"><span class="dot" style="background:#d97706"></span>혁신 촉진형 인재 15% — 실험, 변화, 신사업 탐색</div>
+      </div>
+      <div class="note">
+        이 비율은 절대적인 정답이 아니라 권장 기준입니다. 초기 스타트업은 실행형과 혁신형 비중이 다소 높을 수 있고,
+        안정기에 접어든 회사는 운영 안정형 비중이 더 커질 수 있습니다.
+      </div>
+    </div>
+
+    <div class="ratio-card">
+      <h3>인재 유형별 기대 역할</h3>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <strong>전략형 인재</strong>
+        <p>회사의 방향, 우선순위, 시장 판단을 책임지는 역할</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <strong>핵심 실행형 인재</strong>
+        <p>목표를 결과로 전환하며 팀의 속도를 끌어올리는 역할</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <strong>운영 안정형 인재</strong>
+        <p>조직이 흔들리지 않도록 프로세스와 품질을 유지하는 역할</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none;">
+        <strong>혁신 촉진형 인재</strong>
+        <p>기존 방식을 넘어 새로운 성장 동력을 만드는 역할</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>인재 포지셔닝</h2>
+    <p>조직 내 인재는 단순 직무 분류가 아니라, 변화 대응력과 실행 영향력을 기준으로 포지셔닝할 수 있습니다.</p>
+  </div>
+  <div class="positioning">
+    <div class="position-box">
+      <h3>포지셔닝 매트릭스</h3>
+      <div class="matrix">
+        <div class="axis-y"></div>
+        <div class="axis-x"></div>
+        <div class="quad q1"></div>
+        <div class="quad q2"></div>
+        <div class="quad q3"></div>
+        <div class="quad q4"></div>
+        <div class="axis-label label-y">변화 대응력</div>
+        <div class="axis-label label-x">실행 영향력</div>
+
+        <div class="bubble b1">혁신형<small>실험·전환</small></div>
+        <div class="bubble b2">전략형<small>방향·판단</small></div>
+        <div class="bubble b3">핵심 실행형<small>성과·리드</small></div>
+        <div class="bubble b4">운영 안정형<small>체계·품질</small></div>
+      </div>
+    </div>
+
+    <div class="position-box">
+      <h3>포지션별 의미</h3>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <span class="badge b-blue">전략형</span>
+        <p>변화를 읽고 큰 방향을 설계하는 인재입니다. 리더십, 시장 감각, 판단력이 중요합니다.</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <span class="badge b-purple">핵심 실행형</span>
+        <p>가장 높은 영향력으로 실제 성과를 만들어내는 중심 인재입니다. 팀의 속도와 결과를 좌우합니다.</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none; margin-bottom:12px;">
+        <span class="badge b-green">운영 안정형</span>
+        <p>성장의 흔들림을 줄이고 조직의 반복 가능한 시스템을 만듭니다. 회사가 커질수록 가치가 커집니다.</p>
+      </div>
+      <div class="card" style="padding:18px; box-shadow:none;">
+        <span class="badge b-orange">혁신 촉진형</span>
+        <p>현재의 정답을 깨고 새로운 기회를 탐색하는 인재입니다. 신사업, 실험 문화, 변화 주도에 적합합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>조직이 앞으로 나아가기 위한 실행 제안</h2>
+    <p>인재를 채용하는 것보다 중요한 것은, 어떤 포지션에 어떤 밀도로 배치할 것인지 설계하는 일입니다.</p>
+  </div>
+  <div class="roadmap">
+    <article class="card">
+      <div class="step-number">1</div>
+      <h3>현재 인재 분포 진단</h3>
+      <p>현재 조직에 전략형, 실행형, 운영형, 혁신형 인재가 어느 정도 비율로 존재하는지 파악해야 합니다.</p>
+    </article>
+    <article class="card">
+      <div class="step-number">2</div>
+      <h3>부족한 포지션 보강</h3>
+      <p>성과가 느리다면 실행형을, 조직이 흔들린다면 운영형을, 방향이 불명확하면 전략형을 먼저 강화해야 합니다.</p>
+    </article>
+    <article class="card">
+      <div class="step-number">3</div>
+      <h3>리더십과 배치 최적화</h3>
+      <p>좋은 인재라도 잘못 배치되면 힘을 잃습니다. 역할과 책임, 의사결정권, 협업 구조를 함께 설계해야 합니다.</p>
+    </article>
+  </div>
+</section>
+
+<footer>
+  회사의 경쟁력은 사람의 수가 아니라, 필요한 인재가 적절한 비율과 위치에 놓여 있는가에 달려 있습니다.
+</footer>
+
+  </div>
 </body>
 </html>
